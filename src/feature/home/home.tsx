@@ -1,12 +1,10 @@
 import { graphql, PreloadedQuery, usePreloadedQuery } from "react-relay";
 import homeQueryGraphql, { homeQuery } from "__generated__/HomeQuery.graphql";
-import { Link } from "wouter";
 
 graphql`
   query homeQuery {
-    getAllPokemon(offset: 0, take: 151) {
-      num
-      species
+    viewer {
+      name
     }
   }
 `;
@@ -18,19 +16,11 @@ type Props = {
 export function Home({ queryRef }: Props) {
   const data = usePreloadedQuery<homeQuery>(homeQueryGraphql, queryRef);
 
-  console.log(data.getAllPokemon);
+  console.log(data.viewer.name);
   return (
     <main>
       <h1>Home</h1>
-      <ul>
-        {data.getAllPokemon.map((pokemon) => (
-          <li key={pokemon.num}>
-            <Link to={`/pokemon/${pokemon.num}`}>
-              #{pokemon.num}: {pokemon.species}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {data.viewer.name}, welcome to gHubba
     </main>
   );
 }
