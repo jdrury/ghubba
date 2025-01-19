@@ -17,7 +17,7 @@ export async function fetchGraphql(
     method: "POST",
     headers: {
       Accept: "application/json",
-      // Authorization: `bearer ${token}`,
+      Authorization: `bearer ${import.meta.env.VITE_GH_TOKEN}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
