@@ -19,8 +19,10 @@ export function Home({ queryRef }: Props) {
   console.log(data.viewer.name);
   return (
     <main>
-      <h1>Home</h1>
+      <h1 className="text-4xl font-extrabold">Home</h1>
+      <div className="border-2 border-black px-2 py-5" >
       {data.viewer.name}, welcome to gHubba
+      </div>
     </main>
   );
 }
