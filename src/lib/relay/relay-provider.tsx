@@ -1,13 +1,11 @@
-import type { ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 import { RelayEnvironmentProvider } from "react-relay";
 
-import { relayEnvironment } from "./relay-environment";
+import { createEnvironment } from "./relay-environment.ts";
 
-type Props = {
-  children: ReactNode;
-};
+const relayEnvironment = createEnvironment();
 
-export function RelayProvider({ children }: Props) {
+export function RelayProvider({ children }: PropsWithChildren) {
   return (
     <RelayEnvironmentProvider environment={relayEnvironment}>
       {children}

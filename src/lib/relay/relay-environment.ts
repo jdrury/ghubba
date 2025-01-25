@@ -1,6 +1,6 @@
 import { Store, RecordSource, Environment, Network } from "relay-runtime";
 
-import { fetchGraphql } from "./fetch-graphql";
+import { fetchGraphql } from "./fetch-graphql.ts";
 
 export function createEnvironment() {
   const network = Network.create(fetchGraphql); // TODO fetch wrapper with caching, custom header support, abortable
@@ -10,5 +10,3 @@ export function createEnvironment() {
 
   return new Environment({ network, store });
 }
-
-export const relayEnvironment = createEnvironment();
