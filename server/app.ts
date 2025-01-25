@@ -1,5 +1,6 @@
-import { App } from "./deps.ts";
 import { config } from "./config.ts";
+import { App } from "octokit";
+
 
 export const app = new App({
   appId: config.appId,
