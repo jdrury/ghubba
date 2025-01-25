@@ -5,9 +5,9 @@ import { App } from "octokit";
 export const app = new App({
   appId: config.appId,
   privateKey: config.privateKey,
-  webhooks: {
-    secret: config.webhookSecret,
-  },
+  // webhooks: {
+  //   secret: config.webhookSecret,
+  // },
 });
 
 // Setup webhook handlers
