@@ -1,5 +1,5 @@
-import { serve } from "./deps.ts";
-import { createNodeMiddleware } from "./deps.ts";
+import { serve } from "std/http/server.ts";
+import { createNodeMiddleware } from "octokit";
 import { app } from "./app.ts";
 import { config } from "./config.ts";
 
