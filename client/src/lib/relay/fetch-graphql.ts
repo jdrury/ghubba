@@ -16,9 +16,10 @@ export async function fetchGraphql(
 
   const resp = await fetch(SERVER_URL, {
     method: "POST",
+    mode: "cors",
+    credentials: "include",
     headers: {
       Accept: "application/json",
-      Authorization: `bearer ${import.meta.env.VITE_GH_TOKEN}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
