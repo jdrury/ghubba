@@ -4,10 +4,14 @@ import { App } from "octokit";
 
 export const app = new App({
   appId: config.appId,
-  privateKey: config.privateKey,
-  // webhooks: {
-  //   secret: config.webhookSecret,
-  // },
+  privateKey: config.clientSecret,
+  oauth: {
+    clientId: config.clientId,
+    clientSecret: config.clientSecret
+  },
+  webhooks: {
+    secret: "dummy_secret",
+  },
 });
 
 // Setup webhook handlers
