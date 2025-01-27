@@ -8,30 +8,26 @@ const middleware = createNodeMiddleware(app);
 Deno.serve({ port: config.port }, async (req) => {
   const url = new URL(req.url);
 
-  // CORS preflight
-  // TODO DEV support only
-  if (req.method === "OPTIONS") {
+  if (url.pathname === "/api/login" && req.method === "POST") {
     return new Response(null, {
+      status: 302,
       headers: {
-        "Access-Control-Allow-Origin": "http://localhost:5173",
-        "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Credentials": "true",
-      },
-    });
+        Location: `https://github.com/login/oauth/authorize?client_id=${config.clientId}`,
+      }
+    })
   }
 
-  if (url.pathname === "/logout" && req.method === "POST") {
+  if (url.pathname === "/api/logout" && req.method === "POST") {
     return new Response(null, {
+      status: 302,
       headers: {
         "Set-Cookie": `gh_token=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0`,
-        "Access-Control-Allow-Origin": "http://localhost:5173",
-        "Access-Control-Allow-Credentials": "true",
+        "Location": "/"
       },
     });
   }
 
-  if (url.pathname === "/graphql" && req.method === "POST") {
+  if (url.pathname === "/api/graphql" && req.method === "POST") {
     const cookies = req.headers.get("cookie");
     const token = cookies?.match(/gh_token=([^;]+)/)?.[1];
 
@@ -53,8 +49,6 @@ Deno.serve({ port: config.port }, async (req) => {
     return new Response(await resp.text(), {
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:5173",
-        "Access-Control-Allow-Credentials": "true",
       },
     });
   }
@@ -65,11 +59,26 @@ Deno.serve({ port: config.port }, async (req) => {
   }
 
   // OAuth callback handler
+  // api/auth/callback/github
   if (url.pathname === "/api/auth/callback/github") {
     return handleAuthCallback(req);
   }
 
-  return new Response("Deno is running! 🦕");
+  if (url.pathname ==="/assets/index-*.js") {
+    return new Response(await Deno.readFile("./assets/index-CnPmom0E.js"), {
+      status: 200,
+      headers: {
+        "content-type": "text/javascript; charset=utf-8",
+      },
+    })
+  }
+
+  return new Response(await Deno.readFile("./index.html"), {
+    status: 200,
+    headers: {
+      "content-type": "text/html; charset=utf-8",
+    },
+  })
 });
 
 async function handleAuthCallback(req: Request) {
@@ -89,8 +98,18 @@ async function handleAuthCallback(req: Request) {
     }),
   });
 
+
   const data = await resp.json();
 
+  // Github returns 200 OK even if request fails... (>.<)
+  if (data.error) {
+    console.error('Request for access token has failed!')
+    // TODO how to respond?
+  }
+
+  console.log(resp.status)
+  console.log(resp.statusText)
+  console.log(data)
   return new Response(null, {
     status: 302,
     headers: {

@@ -4,20 +4,13 @@ import type {
   Variables,
 } from "relay-runtime";
 
-const SERVER_URL = import.meta.env.VITE_GRAPHQL_SERVER_URL;
-
 export async function fetchGraphql(
   params: RequestParameters,
   variables: Variables,
 ): Promise<GraphQLResponse> {
-  if (!SERVER_URL) {
-    throw new Error("Missing GraphQL server url");
-  }
 
-  const resp = await fetch(SERVER_URL, {
+  const resp = await fetch("/api/graphql", {
     method: "POST",
-    mode: "cors",
-    credentials: "include",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",

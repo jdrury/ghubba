@@ -29,5 +29,7 @@
 
     "types": ["node"]  // Add support for Node in vite.config.js (path, __dirname)
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "vite.config.mts"
+  ]
 }
