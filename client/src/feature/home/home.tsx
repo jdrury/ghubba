@@ -1,6 +1,5 @@
 import { graphql, PreloadedQuery, usePreloadedQuery } from "react-relay";
 import homeQueryGraphql, { homeQuery } from "__generated__/HomeQuery.graphql";
-import { Link } from "wouter";
 
 graphql`
   query homeQuery {
@@ -24,9 +23,9 @@ export function Home({ queryRef }: Props) {
         {data.viewer.name}, welcome to gHubba
       </div>
       <footer>
-        <Link to="/logout" className="text-blue-500">
-          Logout
-        </Link>
+        <form action="/api/logout" method="POST">
+          <button type="submit">Logout</button>
+        </form>
       </footer>
     </main>
   );

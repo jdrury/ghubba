@@ -6,6 +6,10 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
+  root: 'src',
+  build: {
+    outDir: "../../server/"
+  },
   envDir: path.resolve(__dirname, './config'),
   plugins: [react(), relay, tailwindcss()],
   resolve: {
@@ -15,5 +19,9 @@ export default defineConfig({
       '__generated__': path.resolve(__dirname, './__generated__')
     },
   },
-  root: 'src',
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8000',
+    },
+  },
 });
