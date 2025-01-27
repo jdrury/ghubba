@@ -1,4 +1,5 @@
 import { createNodeMiddleware } from "octokit";
+import { contentType  } from "@std/media-types";
 
 import { app } from "./app.ts";
 import { config } from "./config.ts";
@@ -64,14 +65,17 @@ Deno.serve({ port: config.port }, async (req) => {
     return handleAuthCallback(req);
   }
 
-  if (url.pathname ==="/assets/index-*.js") {
-    return new Response(await Deno.readFile("./assets/index-CnPmom0E.js"), {
+  if (url.pathname.startsWith('/assets')) {
+
+    return new Response(await Deno.readFile('.' + url.pathname), {
       status: 200,
       headers: {
-        "content-type": "text/javascript; charset=utf-8",
+        "content-type":contentType(url.pathname.split('.')[1]) || "application/octet-stream", 
       },
     })
+
   }
+
 
   return new Response(await Deno.readFile("./index.html"), {
     status: 200,
@@ -114,10 +118,10 @@ async function handleAuthCallback(req: Request) {
     status: 302,
     headers: {
       "Set-Cookie":
-        `gh_token=${data.access_token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${
-          60 * 60 * 24
-        }`,
-      "Location": "http://localhost:5173",
+      `gh_token=${data.access_token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${
+60 * 60 * 24
+}`,
+      "Location": "http://localhost:8000",
     },
   });
 }
