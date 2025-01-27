@@ -1,5 +1,13 @@
 {
   "version": "4",
+  "specifiers": {
+    "jsr:@std/media-types@^1.1.0": "1.1.0"
+  },
+  "jsr": {
+    "@std/media-types@1.1.0": {
+      "integrity": "c9d093f0c05c3512932b330e3cc1fe1d627b301db33a4c2c2185c02471d6eaa4"
+    }
+  },
   "redirects": {
     "https://deno.land/std/http/cookie.ts": "https://deno.land/std@0.224.0/http/cookie.ts",
     "https://deno.land/std/http/file_server.ts": "https://deno.land/std@0.224.0/http/file_server.ts",
@@ -166,5 +174,10 @@
     "https://esm.sh/universal-user-agent@6.0.1?target=denonext": "61f20abb96ece96c74a807193d409ef1b80d7386932b741d6a36eb834fb8e70f",
     "https://esm.sh/wrappy@1.0.2/denonext/wrappy.mjs": "9b30fecc8c0ab8657d63ee25d8d67f22fed7ce32136e667f7da1e88cbc8b8ef4",
     "https://esm.sh/wrappy@1.0.2?target=denonext": "8320150f54fb04978cacf7cfc557e43eca3b628375e09d45e78268d8035def7f"
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@std/media-types@^1.1.0"
+    ]
   }
 }

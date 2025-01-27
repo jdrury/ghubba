@@ -4,6 +4,7 @@
     "dev": "deno run --watch --allow-net --allow-env --allow-read --allow-sys server.ts"
   },
   "imports": {
+    "@std/media-types": "jsr:@std/media-types@^1.1.0",
     "std/": "https://deno.land/std@0.204.0/",
     "octokit": "https://esm.sh/octokit@3.1.0",
     "deleteCookie": "https://deno.land/std@0.224.0/http/cookie.ts"
