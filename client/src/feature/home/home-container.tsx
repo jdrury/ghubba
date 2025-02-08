@@ -7,7 +7,9 @@ export function HomeContainer() {
   const [queryRef, loadQuery] = useQueryLoader<homeQuery>(homeQueryNode);
 
   useEffect(() => {
-    loadQuery({});
+    loadQuery({
+      login: "jdrury"
+    });
   }, [loadQuery]);
 
   return (
