@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { graphql, PreloadedQuery, usePreloadedQuery } from "react-relay";
 
-import { homeQuery } from "__generated__/HomeQuery.graphql";
+import { homeQuery } from "__generated__/homeQuery.graphql";
 
 const query = graphql`
   query homeQuery($login: String!) {
