@@ -27,9 +27,9 @@ const query = graphql`
   }
 `;
 
-export function loader(vars: homeQuery$variables) {
-  return loadQuery<homeQuery>(environment, query, vars)
-}
+// export function loader(vars: homeQuery$variables) {
+//   return loadQuery<homeQuery>(environment, query, vars)
+// }
 
 type Props = {
   queryRef: PreloadedQuery<homeQuery>;

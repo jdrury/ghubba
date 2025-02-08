@@ -1,9 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Home, loader } from "@/feature/home/home";
 import { Suspense } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+
+import { Home } from "@/feature/home/home";
+import { fetchQuery } from "@/lib/relay/fetch-query.ts";
+
+import HomeQueryGraphql, { homeQuery } from "__generated__/homeQuery.graphql.ts";
 
 export const Route = createFileRoute("/")({
-  loader: () => loader({login: "jdrury"}),
+  loader: () => fetchQuery<typeof HomeQueryGraphql, homeQuery>(HomeQueryGraphql, { login: "jdrury" }),
   component: HomeRoute,
 })
 
