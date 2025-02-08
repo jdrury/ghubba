@@ -1,13 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Home, loader } from "@/feature/home/home";
+import { Suspense } from "react";
 
 export const Route = createFileRoute("/")({
-  component: Index,
-});
+  loader: () => loader({login: "jdrury"}),
+  component: HomeRoute,
+})
 
-function Index() {
+function HomeRoute() {
+  const queryRef = Route.useLoaderData()
   return (
-    <div className="p-2">
-      <h3>Welcome Home!</h3>
-    </div>
-  );
+    <Suspense fallback={"Loading..."}>
+      {queryRef && <Home queryRef={queryRef} />}
+    </Suspense>
+  )
 }

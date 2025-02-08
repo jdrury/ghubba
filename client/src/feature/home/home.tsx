@@ -1,7 +1,8 @@
 import { Link } from "wouter";
-import { graphql, PreloadedQuery, usePreloadedQuery } from "react-relay";
+import { graphql, loadQuery, PreloadedQuery, usePreloadedQuery } from "react-relay";
 
-import { homeQuery } from "__generated__/homeQuery.graphql";
+import { homeQuery, homeQuery$variables } from "__generated__/homeQuery.graphql";
+import { environment } from "@/lib/relay/relay-environment.ts";
 
 const query = graphql`
   query homeQuery($login: String!) {
@@ -25,6 +26,10 @@ const query = graphql`
     }
   }
 `;
+
+export function loader(vars: homeQuery$variables) {
+  return loadQuery<homeQuery>(environment, query, vars)
+}
 
 type Props = {
   queryRef: PreloadedQuery<homeQuery>;
