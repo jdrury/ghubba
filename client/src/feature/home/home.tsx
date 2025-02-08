@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { graphql, loadQuery, PreloadedQuery, usePreloadedQuery } from "react-relay";
 
 import { homeQuery, homeQuery$variables } from "__generated__/homeQuery.graphql";
-import { environment } from "@/lib/relay/relay-environment.ts";
+import { environment } from "@/lib/relay/environment.ts";
 
 const query = graphql`
   query homeQuery($login: String!) {

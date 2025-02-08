@@ -1,9 +1,8 @@
-import { Store, RecordSource, Environment, Network } from "relay-runtime";
+import { Store, RecordSource, Environment } from "relay-runtime";
 
-import { fetchGraphql } from "./fetch-graphql.ts";
+import { network } from "./network.ts";
 
 function createEnvironment() {
-  const network = Network.create(fetchGraphql); // TODO fetch wrapper with caching, custom header support, abortable
   const store = new Store(RecordSource.create(), {
     queryCacheExpirationTime: 15 * 60 * 1000, // expire cached query after 15 minutes
   });
@@ -13,4 +12,4 @@ function createEnvironment() {
 
 const environment = createEnvironment()
 
-export { environment}
+export { environment }

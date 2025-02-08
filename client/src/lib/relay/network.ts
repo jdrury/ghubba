@@ -1,13 +1,18 @@
-import type {
+import {
+  CacheConfig,
   GraphQLResponse,
+  Network,
   RequestParameters,
   Variables,
 } from "relay-runtime";
 
-export async function fetchGraphql(
+async function fetchGQL(
   params: RequestParameters,
   variables: Variables,
+  cacheConfig: CacheConfig
 ): Promise<GraphQLResponse> {
+  console.log("cacheConfig", cacheConfig)
+
   const resp = await fetch("/api/graphql", {
     method: "POST",
     headers: {
@@ -35,3 +40,15 @@ export async function fetchGraphql(
 
   return json;
 }
+
+const network = Network.create((
+  params,
+  variables,
+  cacheConfig,
+) => {
+  // add custom caching and header manipulation heer
+  // custom options can be passed from component to network via `cacheConfig.metadata`
+  return fetchGQL(params, variables, cacheConfig)
+});
+
+export { network }
