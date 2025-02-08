@@ -13,15 +13,17 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "4.0.0",
+    "@tanstack/react-router": "1.99.13",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-error-boundary": "5.0.0",
     "react-relay": "18.2.0",
     "relay-runtime": "18.2.0",
-    "tailwindcss": "4.0.0",
-    "wouter": "3.3.5"
+    "tailwindcss": "4.0.0"
   },
   "devDependencies": {
+    "@tanstack/router-devtools": "1.99.13",
+    "@tanstack/router-plugin": "1.99.14",
     "@types/node": "22.10.5",
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",

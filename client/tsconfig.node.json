@@ -27,9 +27,7 @@
       "__generated__/*": ["__generated__/*"]
     },
 
-    "types": ["node"]  // Add support for Node in vite.config.js (path, __dirname)
+    "types": ["node"] // Add support for Node in vite.config.js (path, __dirname)
   },
-  "include": [
-    "vite.config.mts"
-  ]
+  "include": ["vite.config.mts"]
 }

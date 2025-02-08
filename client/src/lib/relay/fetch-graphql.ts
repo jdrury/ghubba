@@ -8,7 +8,6 @@ export async function fetchGraphql(
   params: RequestParameters,
   variables: Variables,
 ): Promise<GraphQLResponse> {
-
   const resp = await fetch("/api/graphql", {
     method: "POST",
     headers: {

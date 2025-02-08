@@ -5,7 +5,9 @@
 Our application uses a Feature-Core-Common architecture with the following main directories:
 
 ### /common
+
 Completely feature-agnostic components that could be used in any React application. These components should:
+
 - Have no dependencies on other parts of our codebase
 - Be purely presentational or have self-contained logic
 - Be styled using CSS modules for encapsulation
@@ -14,7 +16,9 @@ Completely feature-agnostic components that could be used in any React applicati
 Example: Button, Card, TextField
 
 ### /core
+
 Application composition and fundamental setup. This directory contains:
+
 - Application bootstrap and providers
 - Routing configuration
 - Global styles and design tokens
@@ -24,7 +28,9 @@ Application composition and fundamental setup. This directory contains:
 Example: app.tsx, router.tsx, layout/nav
 
 ### /feature
+
 Feature modules that represent distinct pieces of business functionality. These typically:
+
 - Correspond to major routes or sections of the application
 - Contain their own components and logic
 - May use common components
@@ -34,7 +40,9 @@ Feature modules that represent distinct pieces of business functionality. These 
 Example: /feature/home, /feature/dashboard
 
 ### /lib
+
 Configuration and initialization of third-party services. This includes:
+
 - Relay/GraphQL setup
 - Authentication configuration
 - Logging/monitoring initialization
@@ -54,9 +62,10 @@ Example: /lib/relay, /lib/sentry
 3. **Component Co-location**: Components should keep their files (.tsx, .css, tests) together in the same directory.
 
 4. **Style Organization**:
-    - Global styles live in core/style
-    - Component styles use CSS modules and live with their components
-    - Design tokens defined in core/style/tokens.css
+
+   - Global styles live in core/style
+   - Component styles use CSS modules and live with their components
+   - Design tokens defined in core/style/tokens.css
 
 5. **Feature Independence**: Features should be independent of each other to support code splitting and maintainability.
 

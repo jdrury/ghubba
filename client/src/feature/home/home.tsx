@@ -33,10 +33,9 @@ type Props = {
 export function Home({ queryRef }: Props) {
   const data = usePreloadedQuery<homeQuery>(query, queryRef);
 
-  const repositories = data.user?.repositories.edges?.map(edge => edge?.node)
+  const repositories = data.user?.repositories.edges?.map((edge) => edge?.node);
 
-  console.log(data)
-
+  console.log("GAAD!!");
 
   return (
     <main>
@@ -45,9 +44,11 @@ export function Home({ queryRef }: Props) {
         {data.viewer.name}, welcome to gHubba
       </div>
       <ul>
-        {repositories?.map(repo => (
+        {repositories?.map((repo) => (
           <li key={repo?.id}>
-            <Link to={`/${data.viewer.login}/${repo?.name}`}>{repo?.name} ({repo?.visibility})</Link>
+            <Link to={`/${data.viewer.login}/${repo?.name}`}>
+              {repo?.name} ({repo?.visibility})
+            </Link>
           </li>
         ))}
       </ul>

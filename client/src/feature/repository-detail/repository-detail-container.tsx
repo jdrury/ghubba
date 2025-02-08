@@ -4,11 +4,15 @@ import { Suspense, useEffect } from "react";
 
 import { RepositoryDetail } from "./repository-detail.tsx";
 
-import repositoryDetailQueryNode, { repositoryDetailQuery } from "__generated__/repositoryDetailQuery.graphql.ts";
+import repositoryDetailQueryNode, {
+  repositoryDetailQuery,
+} from "__generated__/repositoryDetailQuery.graphql.ts";
 
 export function RepositoryDetailContainer() {
-  const params = useParams()
-  const [queryRef, loadQuery] = useQueryLoader<repositoryDetailQuery>(repositoryDetailQueryNode);
+  const params = useParams();
+  const [queryRef, loadQuery] = useQueryLoader<repositoryDetailQuery>(
+    repositoryDetailQueryNode,
+  );
 
   useEffect(() => {
     loadQuery({
