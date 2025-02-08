@@ -12,6 +12,14 @@ const query = graphql`
         stargazerCount
         viewerHasStarred
         viewerPermission
+        createdAt
+        collaborators {
+        edges {
+          node {
+            login
+          }
+          }
+        }
       }
     }
   }
@@ -34,6 +42,23 @@ export function RepositoryDetail({ queryRef }: Props) {
   return (
     <section>
       <h1 className="text-4xl font-extrabold">{repo.name}</h1>
+      <ul>
+        <li>
+          Description: {repo.description ?? "n/a"}
+        </li>
+        <li>
+          Starred by Viewer: {repo.viewerHasStarred ? "Y" : "N"}
+        </li>
+        <li>
+          Number of Stars: {repo.stargazerCount ?? "n/a"}
+        </li>
+        <li>
+          Created: {repo.createdAt}
+        </li>
+        <li>
+          Collaborators: {repo.collaborators?.edges?.map(edge => edge?.node).map(collab => collab?.login).join(", ")}
+        </li>
+      </ul>
     </section>
   );
 }

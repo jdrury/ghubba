@@ -10,7 +10,7 @@ const query = graphql`
       login
     }
     user(login: $login) {
-      repositories(first: 10) {
+      repositories(first: 100) {
         edges {
           node {
             id
