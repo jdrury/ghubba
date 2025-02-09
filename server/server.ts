@@ -115,13 +115,11 @@ async function handleAuthCallback(req: Request) {
 
   // Github returns 200 OK even if request fails... (>.<)
   if (data.error) {
-    console.error("Request for access token has failed!");
-    // TODO how to respond?
+    return new Response("Request for access token has failed!", {
+      status: 500,
+    });
   }
 
-  console.log(resp.status);
-  console.log(resp.statusText);
-  console.log(data);
   return new Response(null, {
     status: 302,
     headers: {
