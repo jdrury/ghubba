@@ -1,14 +1,14 @@
-import { createRoot } from "react-dom/client";
 import {
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router";
+import { createRoot } from "react-dom/client";
 
 import { AppLayout } from "@/core/app-layout";
+import { AppContext } from "@/core/app-context.tsx";
 import { Home, loader } from "@/feature/home/home";
-import { RelayProvider } from "@/lib/relay/provider";
 
 import "./index.css";
 
@@ -25,9 +25,9 @@ function start() {
     );
     document.body.prepend(rootElement);
     createRoot(rootElement).render(
-      <RelayProvider>
+      <AppContext>
         <RouterProvider router={router} />{" "}
-      </RelayProvider>,
+      </AppContext>,
     );
   } catch (error) {
     console.error("Failed to start app:", error);
