@@ -1,8 +1,8 @@
 import { createNodeMiddleware } from "octokit";
-import { contentType  } from "@std/media-types";
+import { contentType } from "@std/media-types";
 
 import { app } from "./app.ts";
-import { config } from "./config.ts";
+import { config, ENVIRONMENTS } from "./config.ts";
 
 const middleware = createNodeMiddleware(app);
 
@@ -13,17 +13,19 @@ Deno.serve({ port: config.port }, async (req) => {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: `https://github.com/login/oauth/authorize?client_id=${config.clientId}`,
-      }
-    })
+        Location:
+          `https://github.com/login/oauth/authorize?client_id=${config.clientId}`,
+      },
+    });
   }
 
   if (url.pathname === "/api/logout" && req.method === "POST") {
     return new Response(null, {
       status: 302,
       headers: {
-        "Set-Cookie": `gh_token=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0`,
-        "Location": "/"
+        "Set-Cookie":
+          `gh_token=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0`,
+        "Location": "/",
       },
     });
   }
@@ -65,24 +67,31 @@ Deno.serve({ port: config.port }, async (req) => {
     return handleAuthCallback(req);
   }
 
-  if (url.pathname.startsWith('/assets')) {
-
-    return new Response(await Deno.readFile('.' + url.pathname), {
-      status: 200,
+  if (config.environment === ENVIRONMENTS.LOCAL) {
+    return new Response(null, {
+      status: 302,
       headers: {
-        "content-type":contentType(url.pathname.split('.')[1]) || "application/octet-stream", 
+        "Location": "http://localhost:5173",
       },
-    })
-
+    });
   }
 
+  if (url.pathname.startsWith("/assets")) {
+    return new Response(await Deno.readFile("." + url.pathname), {
+      status: 200,
+      headers: {
+        "content-type": contentType(url.pathname.split(".")[1]) ||
+          "application/octet-stream",
+      },
+    });
+  }
 
   return new Response(await Deno.readFile("./index.html"), {
     status: 200,
     headers: {
       "content-type": "text/html; charset=utf-8",
     },
-  })
+  });
 });
 
 async function handleAuthCallback(req: Request) {
@@ -102,25 +111,24 @@ async function handleAuthCallback(req: Request) {
     }),
   });
 
-
   const data = await resp.json();
 
   // Github returns 200 OK even if request fails... (>.<)
   if (data.error) {
-    console.error('Request for access token has failed!')
+    console.error("Request for access token has failed!");
     // TODO how to respond?
   }
 
-  console.log(resp.status)
-  console.log(resp.statusText)
-  console.log(data)
+  console.log(resp.status);
+  console.log(resp.statusText);
+  console.log(data);
   return new Response(null, {
     status: 302,
     headers: {
       "Set-Cookie":
-      `gh_token=${data.access_token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${
-60 * 60 * 24
-}`,
+        `gh_token=${data.access_token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${
+          60 * 60 * 24
+        }`,
       "Location": "http://localhost:8000",
     },
   });
