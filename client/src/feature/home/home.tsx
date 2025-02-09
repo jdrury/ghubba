@@ -1,8 +1,15 @@
-import { graphql, loadQuery, PreloadedQuery, usePreloadedQuery, VariablesOf } from "react-relay";
+import {
+  graphql,
+  loadQuery,
+  PreloadedQuery,
+  usePreloadedQuery,
+  VariablesOf,
+} from "react-relay";
 
 import { environment } from "@/lib/relay/environment.ts";
 
 import { homeQuery } from "__generated__/homeQuery.graphql";
+import { useLoaderData } from "react-router";
 
 const query = graphql`
   query homeQuery {
@@ -11,45 +18,43 @@ const query = graphql`
       login
       avatarUrl
       websiteUrl
-#      repositories {
-#        edges {
-#          node {
-#          }
-#        }
-#      }
-#      following {
-#        edges {
-#          node {
-#          }
-#        }
-#      }
+      #      repositories {
+      #        edges {
+      #          node {
+      #          }
+      #        }
+      #      }
+      #      following {
+      #        edges {
+      #          node {
+      #          }
+      #        }
+      #      }
     }
-#    user(login: $login) {
-#      repositories(first: 100) {
-#        edges {
-#          node {
-#            id
-#            stargazerCount
-#            viewerHasStarred
-#            name
-#            description
-#            visibility
-#          }
-#        }
-#      }
-#    }
+    #    user(login: $login) {
+    #      repositories(first: 100) {
+    #        edges {
+    #          node {
+    #            id
+    #            stargazerCount
+    #            viewerHasStarred
+    #            name
+    #            description
+    #            visibility
+    #          }
+    #        }
+    #      }
+    #    }
   }
 `;
 
 export function loader(vars: VariablesOf<homeQuery>) {
-  return loadQuery<homeQuery>(environment, query, vars)
+  return loadQuery<homeQuery>(environment, query, vars);
 }
 
-type Props = {
-  queryRef: PreloadedQuery<homeQuery>;
-}
+export function Home() {
+  const queryRef = useLoaderData<PreloadedQuery<homeQuery>>();
 
-export function Home({ queryRef }: Props) {
   const data = usePreloadedQuery<homeQuery>(query, queryRef);
 
   console.log("GAAD!!");
@@ -59,7 +64,9 @@ export function Home({ queryRef }: Props) {
       <h1 className="text-4xl font-extrabold">Home</h1>
       <div className="border-2 border-black px-2 py-5">
         <img src={data.viewer.avatarUrl} />
-        <p><strong>@{data.viewer.login}</strong> | {data.viewer.name}</p>
+        <p>
+          <strong>@{data.viewer.login}</strong> | {data.viewer.name}
+        </p>
       </div>
       {/*<ul>*/}
       {/*  {repositories?.map((repo) => (*/}
