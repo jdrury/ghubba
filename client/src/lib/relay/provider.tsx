@@ -3,10 +3,12 @@ import { RelayEnvironmentProvider } from "react-relay";
 
 import { environment } from "./environment.ts";
 
-export function RelayProvider({ children }: PropsWithChildren) {
+function RelayProvider({ children }: PropsWithChildren) {
   return (
     <RelayEnvironmentProvider environment={environment}>
       {children}
     </RelayEnvironmentProvider>
   );
 }
+
+export { RelayProvider };

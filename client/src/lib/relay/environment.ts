@@ -10,6 +10,6 @@ function createEnvironment() {
   return new Environment({ network, store });
 }
 
-const environment = createEnvironment()
+const environment = createEnvironment();
 
-export { environment }
+export { environment };

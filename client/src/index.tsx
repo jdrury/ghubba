@@ -6,14 +6,13 @@ import {
   createRoutesFromElements,
 } from "react-router";
 
-import { AppLayout } from "./core/app-layout";
+import { AppLayout } from "@/core/app-layout";
+import { Home, loader } from "@/feature/home/home";
+import { RelayProvider } from "@/lib/relay/provider";
 
 import "./index.css";
-import { Home, loader } from "./feature/home/home";
-import { RelayProvider } from "./lib/relay/provider";
 
 function start() {
-  // TODO(jimmy): init sentry
   try {
     const rootElement = document.createElement("div");
 

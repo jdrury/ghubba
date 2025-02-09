@@ -5,11 +5,11 @@ import {
   usePreloadedQuery,
   VariablesOf,
 } from "react-relay";
+import { useLoaderData } from "react-router";
 
 import { environment } from "@/lib/relay/environment.ts";
 
 import { homeQuery } from "__generated__/homeQuery.graphql";
-import { useLoaderData } from "react-router";
 
 const query = graphql`
   query homeQuery {
@@ -18,41 +18,15 @@ const query = graphql`
       login
       avatarUrl
       websiteUrl
-      #      repositories {
-      #        edges {
-      #          node {
-      #          }
-      #        }
-      #      }
-      #      following {
-      #        edges {
-      #          node {
-      #          }
-      #        }
-      #      }
     }
-    #    user(login: $login) {
-    #      repositories(first: 100) {
-    #        edges {
-    #          node {
-    #            id
-    #            stargazerCount
-    #            viewerHasStarred
-    #            name
-    #            description
-    #            visibility
-    #          }
-    #        }
-    #      }
-    #    }
   }
 `;
 
-export function loader(vars: VariablesOf<homeQuery>) {
+function loader(vars: VariablesOf<homeQuery>) {
   return loadQuery<homeQuery>(environment, query, vars);
 }
 
-export function Home() {
+function Home() {
   const queryRef = useLoaderData<PreloadedQuery<homeQuery>>();
 
   const data = usePreloadedQuery<homeQuery>(query, queryRef);
@@ -85,3 +59,5 @@ export function Home() {
     </main>
   );
 }
+
+export { Home, loader };

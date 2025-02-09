@@ -1,4 +1,4 @@
-export function Login() {
+function Login() {
   return (
     <section>
       <h1>hi ando</h1>
@@ -9,3 +9,5 @@ export function Login() {
     </section>
   );
 }
+
+export { Login };

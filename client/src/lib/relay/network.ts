@@ -9,9 +9,9 @@ import {
 async function fetchGQL(
   params: RequestParameters,
   variables: Variables,
-  cacheConfig: CacheConfig
+  cacheConfig: CacheConfig,
 ): Promise<GraphQLResponse> {
-  console.log("cacheConfig", cacheConfig)
+  console.log("cacheConfig", cacheConfig);
 
   const resp = await fetch("/api/graphql", {
     method: "POST",
@@ -41,14 +41,10 @@ async function fetchGQL(
   return json;
 }
 
-const network = Network.create((
-  params,
-  variables,
-  cacheConfig,
-) => {
+const network = Network.create((params, variables, cacheConfig) => {
   // add custom caching and header manipulation heer
   // custom options can be passed from component to network via `cacheConfig.metadata`
-  return fetchGQL(params, variables, cacheConfig)
+  return fetchGQL(params, variables, cacheConfig);
 });
 
-export { network }
+export { network };

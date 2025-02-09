@@ -29,7 +29,7 @@ type Props = {
   queryRef: PreloadedQuery<repositoryDetailQuery>;
 };
 
-export function RepositoryDetail({ queryRef }: Props) {
+function RepositoryDetail({ queryRef }: Props) {
   const data = usePreloadedQuery<repositoryDetailQuery>(query, queryRef);
   const repo = data.repositoryOwner?.repository;
 
@@ -56,3 +56,5 @@ export function RepositoryDetail({ queryRef }: Props) {
     </section>
   );
 }
+
+export { RepositoryDetail };
