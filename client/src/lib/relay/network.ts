@@ -13,7 +13,13 @@ async function fetchGQL(
 ): Promise<GraphQLResponse> {
   console.log("cacheConfig", cacheConfig);
 
-  const resp = await fetch("/api/graphql", {
+  // TODO(jdrury): how to make build fail on this ?
+  const SERVER_URL = import.meta.env.VITE_GRAPHQL_API;
+  if (!SERVER_URL) {
+    throw new Error("Missing required env :: VITE_GRAPHQL_API");
+  }
+
+  const resp = await fetch(SERVER_URL, {
     method: "POST",
     headers: {
       Accept: "application/json",
