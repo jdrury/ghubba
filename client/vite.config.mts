@@ -3,7 +3,6 @@ import { defineConfig } from "vite";
 import relay from "vite-plugin-relay";
 import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
-import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,7 +14,6 @@ export default defineConfig({
     react(),
     relay,
     tailwindcss(),
-    TanStackRouterVite({ autoCodeSplitting: true }),
   ],
   resolve: {
     extensions: [".js", ".ts", ".jsx", ".tsx"], // lets Vite know which extensions to try when resolving imports
