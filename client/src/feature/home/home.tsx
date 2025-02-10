@@ -3,9 +3,8 @@ import {
   loadQuery,
   PreloadedQuery,
   usePreloadedQuery,
-  VariablesOf,
 } from "react-relay";
-import { Outlet, useLoaderData } from "react-router";
+import { LoaderFunctionArgs, Outlet, useLoaderData } from "react-router";
 
 import { environment } from "@/lib/relay/environment.ts";
 
@@ -18,14 +17,14 @@ const query = graphql`
       name
       login
       avatarUrl
-      websiteUrl
       ...repositoryListFragment
     }
   }
 `;
 
-function loader(vars: VariablesOf<homeQuery>) {
-  return loadQuery<homeQuery>(environment, query, vars);
+function loader(args: LoaderFunctionArgs) {
+  console.log(args);
+  return loadQuery<homeQuery>(environment, query, {});
 }
 
 function Home() {
