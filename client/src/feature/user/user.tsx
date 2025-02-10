@@ -22,14 +22,14 @@ const query = graphql`
   }
 `;
 
-function loader({ params }: LoaderFunctionArgs) {
+function loadUser({ params }: LoaderFunctionArgs) {
   const vars = {
     login: params.login ?? "",
   };
   return loadQuery<homeQuery>(environment, query, vars);
 }
 
-function Home() {
+function User() {
   const queryRef = useLoaderData<PreloadedQuery<homeQuery>>();
   const data = usePreloadedQuery<homeQuery>(query, queryRef);
 
@@ -53,4 +53,4 @@ function Home() {
   );
 }
 
-export { Home, loader };
+export { User, loadUser };

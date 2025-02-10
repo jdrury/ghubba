@@ -5,7 +5,7 @@ import {
 } from "react-router";
 
 import { AppLayout } from "@/core/app-layout";
-import { Home, loader as homeLoader } from "@/feature/home/home";
+import { User, loadUser } from "@/feature/user/user.tsx";
 import {
   loadRepository,
   RepositoryDetail,
@@ -15,7 +15,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<AppLayout />}>
       <Route index element={<h2>Search for a user</h2>} />
-      <Route path=":login" loader={homeLoader} element={<Home />}>
+      <Route path=":login" loader={loadUser} element={<User />}>
         <Route
           path=":repository"
           loader={loadRepository}
