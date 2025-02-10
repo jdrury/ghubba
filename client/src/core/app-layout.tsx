@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router";
+import { ErrorBoundary } from "react-error-boundary";
+import { Login } from "@/feature/auth/login.tsx";
 
 function AppLayout() {
   return (
@@ -11,7 +13,9 @@ function AppLayout() {
         </form>
       </nav>
       <Suspense fallback={<p>loading...</p>}>
-        <Outlet />
+        <ErrorBoundary fallback={<Login />}>
+          <Outlet />
+        </ErrorBoundary>
       </Suspense>
     </main>
   );
