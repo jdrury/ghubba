@@ -1,6 +1,6 @@
 import { graphql, PreloadedQuery, usePreloadedQuery } from "react-relay";
 
-import { repositoryDetailQuery } from "__generated__/repositoryDetailQuery.graphql.ts";
+import { repositoryDetailQuery } from "__generated__/repositoryDetailQuery.graphql";
 
 const query = graphql`
   query repositoryDetailQuery($login: String!, $repository: String!) {

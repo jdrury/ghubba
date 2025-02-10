@@ -1,6 +1,6 @@
 import { Store, RecordSource, Environment } from "relay-runtime";
 
-import { network } from "./network.ts";
+import { network } from "./network";
 
 function createEnvironment() {
   const store = new Store(RecordSource.create(), {

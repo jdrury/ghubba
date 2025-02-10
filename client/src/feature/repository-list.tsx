@@ -4,7 +4,7 @@ import { graphql, usePaginationFragment } from "react-relay";
 import {
   repositoryListFragment$data,
   repositoryListFragment$key,
-} from "__generated__/repositoryListFragment.graphql.ts";
+} from "__generated__/repositoryListFragment.graphql";
 
 const fragment = graphql`
   fragment repositoryListFragment on RepositoryOwner

@@ -1,8 +1,8 @@
 import { RouterProvider } from "react-router";
 import { createRoot } from "react-dom/client";
 
-import { AppContext } from "@/core/app-context.tsx";
-import { router } from "@/core/router.tsx";
+import { AppContext } from "@/core/app-context";
+import { router } from "@/core/router";
 
 import "./index.css";
 
