@@ -1,7 +1,10 @@
 import { Link } from "react-router";
 import { graphql, usePaginationFragment } from "react-relay";
 
-import { repositoryListFragment$key } from "__generated__/repositoryListFragment.graphql.ts";
+import {
+  repositoryListFragment$data,
+  repositoryListFragment$key,
+} from "__generated__/repositoryListFragment.graphql.ts";
 
 const fragment = graphql`
   fragment repositoryListFragment on RepositoryOwner
@@ -25,26 +28,47 @@ const fragment = graphql`
     }
   }
 `;
+
+// Extract a type from graphql file for our guard ("repo is Repository")
+type Repository = NonNullable<
+  NonNullable<
+    NonNullable<repositoryListFragment$data["repositories"]["edges"]>[number]
+  >["node"]
+>;
+
 type Props = {
   fragmentRef: repositoryListFragment$key;
 };
 
 function RepositoryList({ fragmentRef }: Props) {
-  const { data, hasNext, isLoadingNext, loadNext, refetch } =
-    usePaginationFragment(fragment, fragmentRef);
+  const { data, hasNext, isLoadingNext, loadNext } = usePaginationFragment(
+    fragment,
+    fragmentRef,
+  );
+
+  const repositories = data.repositories.edges
+    ?.map((edge) => edge?.node)
+    .filter((repo): repo is Repository => Boolean(repo));
+
+  if (repositories == null) {
+    return (
+      <section>
+        <h2>Repositories</h2>
+        <p>No repositories found.</p>
+      </section>
+    );
+  }
 
   return (
     <section>
       <h2>Repositories</h2>
       <ul>
-        {data.repositories.edges
-          ?.map((edge) => edge?.node)
-          .map((repo) => (
-            <li key={repo?.id}>
-              <Link to={`/${repo?.owner}/${repo?.name}`}>{repo?.name}</Link>
-              <small>{repo?.description}</small>
-            </li>
-          ))}
+        {repositories.map((repo) => (
+          <li key={repo?.id}>
+            <Link to={`/${repo?.owner}/${repo?.name}`}>{repo?.name}</Link>
+            <small>{repo?.description}</small>
+          </li>
+        ))}
         <button
           className="border-dashed border-indigo-500 border px-4 py-1"
           onClick={() => loadNext(10)}
