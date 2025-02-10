@@ -1,4 +1,12 @@
-import { graphql, PreloadedQuery, usePreloadedQuery } from "react-relay";
+import {
+  graphql,
+  loadQuery,
+  PreloadedQuery,
+  usePreloadedQuery,
+} from "react-relay";
+import { LoaderFunctionArgs, useLoaderData } from "react-router";
+
+import { environment } from "@/lib/relay/environment.ts";
 
 import { repositoryDetailQuery } from "__generated__/repositoryDetailQuery.graphql";
 
@@ -25,11 +33,16 @@ const query = graphql`
   }
 `;
 
-type Props = {
-  queryRef: PreloadedQuery<repositoryDetailQuery>;
-};
+function loadRepository({ params }: LoaderFunctionArgs) {
+  const vars = {
+    login: params.login ?? "",
+    repository: params.repository ?? "",
+  };
+  return loadQuery<repositoryDetailQuery>(environment, query, vars);
+}
 
-function RepositoryDetail({ queryRef }: Props) {
+function RepositoryDetail() {
+  const queryRef = useLoaderData<PreloadedQuery<repositoryDetailQuery>>();
   const data = usePreloadedQuery<repositoryDetailQuery>(query, queryRef);
   const repo = data.repositoryOwner?.repository;
 
@@ -57,4 +70,4 @@ function RepositoryDetail({ queryRef }: Props) {
   );
 }
 
-export { RepositoryDetail };
+export { RepositoryDetail, loadRepository };

@@ -65,7 +65,12 @@ function RepositoryList({ fragmentRef }: Props) {
       <ul>
         {repositories.map((repo) => (
           <li key={repo?.id}>
-            <Link to={`/${repo?.owner}/${repo?.name}`}>{repo?.name}</Link>
+            <Link
+              className="text-blue-500"
+              to={`/${repo?.owner.login}/${repo?.name}`}
+            >
+              {repo?.name}
+            </Link>
             <small>{repo?.description}</small>
           </li>
         ))}

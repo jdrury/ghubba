@@ -24,7 +24,7 @@ const query = graphql`
 
 function loader({ params }: LoaderFunctionArgs) {
   const vars = {
-    login: params.login,
+    login: params.login ?? "",
   };
   return loadQuery<homeQuery>(environment, query, vars);
 }
@@ -38,23 +38,18 @@ function Home() {
   }
 
   return (
-    <section className="px-2 mt-6">
-      <header>
-        <h2 className="text-4xl font-extrabold">Home</h2>
-      </header>
-      <section className="flex gap-8 mt-6">
-        <section>
-          <div className="border-2 border-black px-2 py-5">
-            <img src={data.user.avatarUrl} />
-            <p>
-              <strong>@{data.user.login}</strong> | {data.user.name}
-            </p>
-          </div>
-        </section>
+    <>
+      <section>
+        <div className="border-2 border-black px-2 py-5">
+          <img src={data.user.avatarUrl} />
+          <p>
+            <strong>@{data.user.login}</strong> | {data.user.name}
+          </p>
+        </div>
         <RepositoryList fragmentRef={data.user} />
-        <Outlet />
       </section>
-    </section>
+      <Outlet />
+    </>
   );
 }
 

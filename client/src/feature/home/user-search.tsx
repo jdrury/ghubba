@@ -10,6 +10,8 @@ function UserSearch() {
     const login = formData.get("login");
     if (typeof login === "string" && login.length > 0) {
       navigate(`/${login}`);
+    } else {
+      navigate("/");
     }
   };
 
@@ -18,7 +20,7 @@ function UserSearch() {
       <input
         type="text"
         name="login"
-        className="border px-2"
+        className="bg-white border border-sky-400 px-2"
         placeholder="Search by github handle..."
       />
       <button
