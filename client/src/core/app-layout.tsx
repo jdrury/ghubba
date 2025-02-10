@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router";
 import { ErrorBoundary } from "react-error-boundary";
+
 import { Login } from "@/feature/auth/login.tsx";
 
 function AppLayout() {

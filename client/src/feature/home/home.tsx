@@ -7,9 +7,9 @@ import {
 import { LoaderFunctionArgs, Outlet, useLoaderData } from "react-router";
 
 import { environment } from "@/lib/relay/environment.ts";
+import { RepositoryList } from "@/feature/repository-list.tsx";
 
 import { homeQuery } from "__generated__/homeQuery.graphql";
-import { RepositoryList } from "@/feature/repository-list.tsx";
 
 const query = graphql`
   query homeQuery {
