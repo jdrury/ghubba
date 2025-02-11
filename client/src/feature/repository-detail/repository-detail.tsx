@@ -4,7 +4,7 @@ import {
   PreloadedQuery,
   usePreloadedQuery,
 } from "react-relay";
-import { LoaderFunctionArgs, useLoaderData } from "react-router";
+import { Link, LoaderFunctionArgs, useLoaderData } from "react-router";
 
 import { environment } from "@/lib/relay/environment.ts";
 
@@ -16,10 +16,6 @@ const query = graphql`
       repository(name: $repository) {
         id
         name
-        description
-        stargazerCount
-        viewerHasStarred
-        viewerPermission
         createdAt
         collaborators {
           edges {
@@ -28,6 +24,13 @@ const query = graphql`
             }
           }
         }
+        description
+        stargazerCount
+        owner {
+          login
+        }
+        viewerHasStarred
+        viewerPermission
       }
     }
   }
@@ -52,6 +55,15 @@ function RepositoryDetail() {
 
   return (
     <section>
+      <nav>
+        <p>
+          <Link className="text-blue-500" to={`/${repo?.owner.login}`}>
+            {repo?.owner.login}
+          </Link>
+          {"/"}
+          {repo.name}
+        </p>
+      </nav>
       <h1 className="text-4xl font-extrabold">{repo.name}</h1>
       <ul>
         <li>Description: {repo.description ?? "n/a"}</li>
