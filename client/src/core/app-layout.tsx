@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { Login } from "@/feature/auth/login";
-import { UserSearch } from "@/feature/user/user-search.tsx";
+import { UserSearch } from "@/feature/user-detail/user-search.tsx";
 
 function AppLayout() {
   return (
