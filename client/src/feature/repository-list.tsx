@@ -1,87 +1,38 @@
 import { Link } from "react-router";
-import { graphql, usePaginationFragment } from "react-relay";
+import { graphql, useFragment } from "react-relay";
 
-import {
-  repositoryListFragment$data,
-  repositoryListFragment$key,
-} from "__generated__/repositoryListFragment.graphql";
+import { repositoryListFragment$key } from "__generated__/repositoryListFragment.graphql.ts";
 
 const fragment = graphql`
-  fragment repositoryListFragment on RepositoryOwner
-  @refetchable(queryName: "repositoryListRefetchQuery")
-  @argumentDefinitions(
-    after: { type: String }
-    first: { type: Int, defaultValue: 10 }
-  ) {
-    repositories(after: $after, first: $first)
-      @connection(key: "RepositoryList_repositories") {
-      edges {
-        node {
-          id
-          name
-          description
-          owner {
-            login
-          }
-        }
-      }
+  fragment repositoryListFragment on Repository @relay(plural: true) {
+    id
+    name
+    description
+    owner {
+      login
     }
   }
 `;
-
-// Extract a type from graphql file for our guard ("repo is Repository")
-type Repository = NonNullable<
-  NonNullable<
-    NonNullable<repositoryListFragment$data["repositories"]["edges"]>[number]
-  >["node"]
->;
 
 type Props = {
   fragmentRef: repositoryListFragment$key;
 };
 
 function RepositoryList({ fragmentRef }: Props) {
-  const { data, hasNext, isLoadingNext, loadNext } = usePaginationFragment(
-    fragment,
-    fragmentRef,
-  );
-
-  const repositories = data.repositories.edges
-    ?.map((edge) => edge?.node)
-    .filter((repo): repo is Repository => Boolean(repo));
-
-  if (repositories == null) {
-    return (
-      <section>
-        <h2>Repositories</h2>
-        <p>No repositories found.</p>
-      </section>
-    );
-  }
-
+  const data = useFragment(fragment, fragmentRef);
   return (
     <section>
-      <h2>Repositories</h2>
-      <ul>
-        {repositories.map((repo) => (
-          <li key={repo?.id}>
-            <Link
-              className="text-blue-500"
-              to={`/${repo?.owner.login}/${repo?.name}`}
-            >
-              {repo?.name}
-            </Link>
-            <small>{repo?.description}</small>
-          </li>
-        ))}
-        <button
-          className="border-dashed border-indigo-500 border px-4 py-1"
-          onClick={() => loadNext(10)}
-          disabled={!hasNext || isLoadingNext}
-        >
-          {isLoadingNext ? "Loading..." : "Load more"}
-        </button>
-      </ul>
+      {data.map((repo) => (
+        <li key={repo.id}>
+          <Link
+            className="text-blue-500"
+            to={`/${repo.owner.login}/${repo.name}`}
+          >
+            {repo.name}
+          </Link>
+          <small>{repo.description ?? "<no description>"}</small>
+        </li>
+      ))}
     </section>
   );
 }
